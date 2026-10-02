@@ -50,3 +50,10 @@ Floating-point interval arithmetic gives bounds that are themselves slightly fuz
 Division by an interval that contains zero is undefined here and raises `ZeroDivisionError`. There is no `[-inf, inf]` convention. If you need extended-real intervals, this is not the library for it.
 
 Also: `float` inputs are rejected on construction. A `float` like `0.1` is already a binary approximation; silently admitting it would defeat the purpose. Pass `"0.1"` or `Fraction(1, 10)`.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
